@@ -27,8 +27,8 @@ In this project, we use the morphological lexicon only:
 
 ## How to use
 
-    const NodeLefff = require('node-lefff');
-    const nl = new NodeLefff();
+    const nodeLefff = require('node-lefff');
+    const nl = await nodeLefff.load();
     
     nl.lem('action') // action
     nl.lem('acteur') // action

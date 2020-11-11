@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node" : ">=14"
+  },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Poyoman39/node-lefff.git"
@@ -28,5 +32,6 @@
     "eslint": "^7.13.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1"
-  }
+  },
+  "dependencies": {}
 }

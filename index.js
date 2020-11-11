@@ -1,3 +1,3 @@
 const nodeLefff = require('./src');
 
-module.exports = nodeLefff.NodeLefff;
+module.exports = nodeLefff;
