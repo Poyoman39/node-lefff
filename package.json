@@ -1,15 +1,14 @@
 {
   "name": "node-lefff",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Pure Javascript implementation of LEFFF lemmatizer",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
-    "node" : ">=14"
+    "node": ">=14"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Poyoman39/node-lefff.git"
