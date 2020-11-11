@@ -1,3 +1,4 @@
+
 # node-lefff
 
 Pure JavaScript implementation of **LEFFF** lemmatizer.
@@ -31,7 +32,64 @@ In this project, we use the morphological lexicon only:
     const nl = await nodeLefff.load();
     
     nl.lem('action') // action
-    nl.lem('acteur') // action
-    nl.lem('actrices') // action
+    nl.lem('acteur') // acteur
+    nl.lem('actrices') // acteur
     nl.lem('Dleyton') // Dleyton
-  
+
+## How to use with [natural](https://www.npmjs.com/package/natural)
+
+    const nodeLefff = require('node-lefff');
+    const nl = await nodeLefff.load();
+    const Stemmer = require('natural/lib/natural/stemmers/stemmer_fr');
+    
+    const LefffLemmer = new Stemmer();
+    LefffLemmer.stem = nl.lem;
+    
+    LefffLemmer.tokenizeAndStem('Mes mémés m\'aimaient mais pas papa'); // ['mémé', 'aimer', 'mais', 'pas', 'papa']
+
+## API Reference
+
+### nl.lem(word)
+- word `<String>`: Word
+- @return `<String>`: Lemmatized word, or word itself, if no lemma is known
+
+### nl.infos(word)
+- word `<String>`: Word
+- @return `Array<Object>`:
+ ```
+    [{
+       type: String
+       lemma: String // Lemmatized word
+       mode: String 
+    }, ...]
+```
+
+> Learn more about mode and type here:
+> - mode: https://github.com/Poyoman39/node-lefff/blob/main/src/lefff-3.4.mlex/lefff-tagset-0.1.2.pdf
+> - type: https://github.com/Poyoman39/node-lefff/blob/main/src/lefff-3.4.mlex/lefff-3.4.mlex
+
+### nl.expandMode(mode)
+- mode `String`: mode string returned by `nl.infos`
+- @return `Object`:
+ ```
+    {
+      indicatif: Bool,
+      conditionnel: Bool,
+      impératif: Bool,
+      subjonctif: Bool,
+      participe: Bool,
+      infinitif: Bool,
+      présent: Bool,
+      futur: Bool,
+      imparfait: Bool,
+      passéSimple: Bool,
+      passé: Bool,
+      premièrePersonne: Bool,
+      deuxièmePersonne: Bool,
+      troisièmePersonne: Bool,
+      masculin: Bool,
+      féminin: Bool,
+      singulier: Bool,
+      pluriel: Bool,
+    }
+```
