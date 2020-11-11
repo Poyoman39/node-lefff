@@ -45,7 +45,7 @@ In this project, we use the morphological lexicon only:
     const LefffLemmer = new Stemmer();
     LefffLemmer.stem = nl.lem;
     
-    LefffLemmer.tokenizeAndStem('Mes mémés m\'aimaient mais pas papa'); // ['mémé', 'aimer', 'mais', 'pas', 'papa']
+    LefffLemmer.tokenizeAndStem('Mes mémés m\'aimaient mais pas papa'); // ['mémé', 'aimer', 'papa']
 
 ## API Reference
 
