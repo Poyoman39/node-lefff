@@ -1,6 +1,6 @@
 {
   "name": "node-lefff",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pure Javascript implementation of LEFFF lemmatizer",
   "main": "index.js",
   "scripts": {
