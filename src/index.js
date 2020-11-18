@@ -83,7 +83,7 @@ const expandMode = (mode) => ({
 });
 
 const defaultConf = {
-  logger: console,
+  logger: () => {},
 };
 
 const load = async (userConf = {}) => {
@@ -92,9 +92,9 @@ const load = async (userConf = {}) => {
     ...userConf,
   };
 
-  conf.logger.debug('[node-leff] Start loading source file');
+  conf.logger('[node-leff] Start loading source file');
   const lefffMlex = await loadLefffMlexFile();
-  conf.logger.debug('[node-leff] End loading source file');
+  conf.logger('[node-leff] End loading source file');
 
   return {
     lefffMlex,
