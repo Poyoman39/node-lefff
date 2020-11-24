@@ -3,21 +3,6 @@ const path = require('path');
 
 const lefffMlexPath = path.join(__dirname, 'lefff-3.4.mlex/lefff-3.4.mlex');
 
-// const lefffMlex = require('./lefff-3.4.mlex/lefff-3.4.mlex');
-
-// // Create a stream from some character device.
-// const stream = fs.createReadStream('/dev/input/event0');
-// setTimeout(() => {
-//   stream.close(); // This may not close the stream.
-//   // Artificially marking end-of-stream, as if the underlying resource had
-//   // indicated end-of-file by itself, allows the stream to close.
-//   // This does not cancel pending read operations, and if there is such an
-//   // operation, the process may still not be able to exit successfully
-//   // until it finishes.
-//   stream.push(null);
-//   stream.read(0);
-// }, 100);
-
 const loadLefffMlexFile = () => new Promise((resolve, reject) => {
   const lefffMlexStream = fs.createReadStream(lefffMlexPath, {
     encoding: 'utf8',
@@ -49,7 +34,12 @@ const loadLefffMlexFile = () => new Promise((resolve, reject) => {
   });
 
   lefffMlexStream.on('end', () => {
-    lefffMlexStream.close();
+    lefffMlexStream.close(); // This may not close the stream.
+    // Artificially marking end-of-stream, as if the underlying resource had
+    // indicated end-of-file by itself, allows the stream to close.
+    // This does not cancel pending read operations, and if there is such an
+    // operation, the process may still not be able to exit successfully
+    // until it finishes.
     lefffMlexStream.push(null);
     lefffMlexStream.read(0);
 
