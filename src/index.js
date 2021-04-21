@@ -3,7 +3,15 @@ const path = require('path');
 
 const lefffMlexPath = path.join(__dirname, 'lefff-3.4.mlex/lefff-3.4.mlex');
 
-const loadLefffMlexFile = () => new Promise((resolve, reject) => {
+// @see https://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
+const noCaseNoDiacritic = (txt) => (
+  txt.toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+);
+
+
+const loadLefffMlexFile = (conf) => new Promise((resolve, reject) => {
   const lefffMlexStream = fs.createReadStream(lefffMlexPath, {
     encoding: 'utf8',
   });
@@ -17,11 +25,19 @@ const loadLefffMlexFile = () => new Promise((resolve, reject) => {
 
     lines.forEach((line) => {
       const [
-        word,
+        _word,
         type,
-        lemma,
+        _lemma,
         mode,
       ] = line.split('\t');
+
+      const word = conf.noCaseNoDiacritic
+        ? noCaseNoDiacritic(word)
+        : _word;
+
+      const lemma = conf.noCaseNoDiacritic
+        ? noCaseNoDiacritic(lemma)
+        : _lemma;
 
       lefffMlex[word] = lefffMlex[word] || [];
 
@@ -74,6 +90,7 @@ const expandMode = (mode) => ({
 
 const defaultConf = {
   logger: () => {},
+  noCaseNoDiacritic: false,
 };
 
 const load = async (userConf = {}) => {
@@ -83,7 +100,7 @@ const load = async (userConf = {}) => {
   };
 
   conf.logger('[node-leff] Start loading source file');
-  const lefffMlex = await loadLefffMlexFile();
+  const lefffMlex = await loadLefffMlexFile(conf);
   conf.logger('[node-leff] End loading source file');
 
   return {
