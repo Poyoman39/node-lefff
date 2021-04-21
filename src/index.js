@@ -32,11 +32,11 @@ const loadLefffMlexFile = (conf) => new Promise((resolve, reject) => {
       ] = line.split('\t');
 
       const word = conf.noCaseNoDiacritic
-        ? noCaseNoDiacritic(word)
+        ? noCaseNoDiacritic(_word)
         : _word;
 
       const lemma = conf.noCaseNoDiacritic
-        ? noCaseNoDiacritic(lemma)
+        ? noCaseNoDiacritic(_lemma)
         : _lemma;
 
       lefffMlex[word] = lefffMlex[word] || [];
