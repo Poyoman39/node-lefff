@@ -16,6 +16,11 @@ const loadLefffMlexFile = (conf) => new Promise((resolve, reject) => {
     encoding: 'utf8',
   });
 
+  const lemTypePriority = conf.lemTypeOrder.reduce((acc, type, i) => ({
+    ...acc,
+    [type]: 100 - i,
+  }), {});
+
   const lefffMlex = {};
 
   let lastLine = '';
@@ -59,6 +64,10 @@ const loadLefffMlexFile = (conf) => new Promise((resolve, reject) => {
     lefffMlexStream.push(null);
     lefffMlexStream.read(0);
 
+    lefffMlex.sort(({ type: a }, { type: b }) => (
+      (lemTypePriority[b] || 0) - (lemTypePriority[a] || 0)
+    ));
+
     resolve(lefffMlex);
   });
 
@@ -91,6 +100,7 @@ const expandMode = (mode) => ({
 const defaultConf = {
   logger: () => {},
   noCaseNoDiacritic: false,
+  lemTypeOrder: ['nc', 'adj', 'adv', 'v'],
 };
 
 const load = async (userConf = {}) => {
