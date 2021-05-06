@@ -64,9 +64,11 @@ const loadLefffMlexFile = (conf) => new Promise((resolve, reject) => {
     lefffMlexStream.push(null);
     lefffMlexStream.read(0);
 
-    lefffMlex.sort(({ type: a }, { type: b }) => (
-      (lemTypePriority[b] || 0) - (lemTypePriority[a] || 0)
-    ));
+    Object.values(lefffMlex).forEach((lems) => {
+      lems.sort(({ type: a }, { type: b }) => (
+        (lemTypePriority[b] || 0) - (lemTypePriority[a] || 0)
+      ));
+    });
 
     resolve(lefffMlex);
   });
@@ -114,7 +116,7 @@ const load = async (userConf = {}) => {
   conf.logger('[node-leff] End loading source file');
 
   return {
-    lefffMlex,
+    getLefffMlex: () => lefffMlex,
     lem: (word) => lefffMlex[word]?.[0]?.lemma || word,
     infos: (word) => lefffMlex[word],
     expandMode,
